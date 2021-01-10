@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://karl6885.github.io/sitemap.xml
+Sitemap: https://deepwonwoo.github.io/sitemap.xml
