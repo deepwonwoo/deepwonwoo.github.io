@@ -1,11 +1,121 @@
 ---
 layout: post
 title: "Data Science Map"
-date: 2020-11-09
-categories: Data_science
+date: 2021-01-09
+categories: Reinforcement
 tags: [Machine learning, Data science, Deep learning, Statistics]
 ---
 
-오래 전부터 Data science쪽을 공부하면서 개인적으로 정리한 마인드맵 형태의 지도다.
+# 강화학습이란?
 
-<iframe width="600" height="400" frameborder="0" src="https://www.mindmeister.com/maps/public_map_shell/1215561623/data-science?width=600&height=400&z=auto&presentation=1" scrolling="no" style="overflow: hidden; margin-bottom: 5px;">Your browser is not able to display frames. Please visit <a href="https://www.mindmeister.com/1215561623/data-science" target="_blank">Data Science</a> on MindMeister.</iframe><div class="mb-5"><a href="https://www.mindmeister.com/1215561623/data-science" target="_blank">Data Science</a> by <a href="https://www.mindmeister.com/users/channel/33799471" target="_blank">Yeongkyu kim</a></div>
+
+
+* 행동심리학에서 **강화** 개념 처음 등장
+
+  > 동물이 시행착오를 통해 스스로 학습하는 방법  (강화실험: 스키너의 쥐 실험)
+  >
+  > 🐭: 생쥐가 시행착오를 통해 지렛대와 치즈 사이의 관계 학습
+  >
+  > [👨‍💻](https://www.emojiall.com/ko/emoji/👨‍💻) : 에이전트가 시행착오를 통해 행동과 보상 사이의 관계 학습
+
+* 강화학습의 목적은 **보상**을 최대한 많이 받는 **최적 정략(정책)**을 짜는 것
+
+* 정책이란:
+  현재 상태에서의 행동에 대한 함수
+  ![image-20210105232356420](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210105232356420.png) 
+
+* **최적 정책**이란:
+  미래 받을 수 있는 **누적 보상을 최대화** 하는 **정책**
+
+* 최적 정책 찾는 방법:
+
+  1. 기존 정책 **평가**
+  2. 기존 정책 **개선**
+  3. 1,2 반복
+
+  * 정책 평가 지표: **Value Function(가치 함수)**
+
+* 정책을 평가하는 Value Function을 찾는 방법
+
+  - 강화학습 문제 수학적 정의 필요
+  - 강화학습 문제 == 순차 행동 결정 문제
+  - 순차 행동 결정 문제 해결법 == 마르코프 결정 프로세스
+
+
+
+# 마르코프 결정 프로세스 (MDP)
+
+* 정의: 강화학습 **환경**의 **수학적 정의**
+* 필요 이유
+  - 정책을 평가하는 **Value Function**계산
+
+* 5가지 요소
+
+  1. State(상태)
+
+     - 에이전트가 다음 **행동 결정** 시 , **필수 정보**
+
+     - **마르코프 특성** :  과거 상태 정보는 현재 상태에 포함 or 사용 X
+
+  2. Action(행동)
+
+     - 에이전트가 **할 수 있는 행동**
+
+  3. Reward (보상)
+
+     - 에이전트가 **행동함으로써 얻게 되는 보상**
+
+  4. Transition Probability (전이 확률)
+
+     - 에이전트가 행동 시, **특정 상태로 갈 확률**
+
+  5. Discount Factor(할인 요소)
+
+     - 에이전트가 받을 **보상의 변화**
+
+
+
+**Value Function** 
+
+- 가치 함수(Value Function)
+  * **현 상태**에서 **에이전트**가 **정책**을 따를 경우, **미래 보상**들의 **기댓값**
+
+* 구하는 방법 
+
+  EX) 생쥐가 최대한 치즈를 많이 먹기 위한 정책의 가치함수
+
+  - Value Function 높음 -> 먹을 수 있는 치즈들의 평균 개수 높음 -> 좋은 정책
+
+  - Value Function 낮음 -> 먹을 수 있는 치즈들의 평균 개수 낮음 -> 나쁜 정책
+
+    => 현재 생쥐가 **정책**을 따른 경우 먹을 수 있는 **치즈 평균 개수**
+
+  ![image-20210108202643254](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108202643254.png)![image-20210108202730684](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108202730684.png)
+
+   ![image-20210108202936341](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108202936341.png)![image-20210108203027995](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108203027995.png)
+
+  ![image-20210108213032157](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108213032157.png)
+
+  **Bellman Equation**
+  : **Value Function 특성** 이용하여 똑똑하게 **Value Function**을 구함
+  ![image-20210108213309044](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108213309044.png)
+
+  * 방법: 현재 상태(S)의 Value Function은 다음 상태 (S')의 Value Function을 사용해 표현
+     ![image-20210108213755581](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108213755581.png)
+
+  * 행렬을 풀어 모든 Value Function을 구함
+    ![image-20210108214311740](C:\Users\com11\AppData\Roaming\Typora\typora-user-images\image-20210108214311740.png)
+  * 단점 : 
+    행렬 사용해 Value Function을 구할 시, 계산량 증가(State가 무한...)
+  * 솔루션:
+    Iterative한 방법을 사용해서 해결(Gradient Descent와 유사)
+
+
+
+
+
+
+
+# Planing by Dynamic Programming
+
+*  정의: 강화학습 **환경**의 **수학적 정의**
