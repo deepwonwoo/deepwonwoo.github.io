@@ -2,7 +2,7 @@
 layout: post
 title: "[PR#1] Efficient Hyperparameter Optimization Through Model-based Reinforcement Learning"
 date: 2021-01-03
-categories: Data_science
+categories: Reinforcement_Learning
 tags: [Reinforcement Learning, Hyperparameter, Paper]
 ---
 
