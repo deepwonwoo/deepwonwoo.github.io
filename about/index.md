@@ -3,4 +3,4 @@ layout: page
 type: about
 ---
 
-Building...
+![alt text]({{ site.baseurl }}/assets/ww.png "Profile Picture"){:.profile}
