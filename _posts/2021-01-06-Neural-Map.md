@@ -79,3 +79,19 @@ Ruslan Salakhutdinov(professor of computer science at the Carnegie Mellon Univer
   * Find and enter the goal
 
 * **Solution**: Write everything into memory
+
+
+
+# Memory Networks
+
+* Store(key, value) representations for the last M frames
+
+* At each time step:
+  * Perform a read operation over their memory databse
+  * Write the latest percept into memory
+  * Easy to learn: Just store as much as possible!
+
+* Can be inefficient:
+  * We need M> time horizon of the task (can't know this a prior)
+  * We might store a lot of useless/redundant data
+* Time/space requirements increase with M
