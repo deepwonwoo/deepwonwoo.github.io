@@ -18,7 +18,7 @@ pyplot 모듈의 각각의 함수를 사용해서 그래프를 만들고 변화�
 
 예를 들어, 그래프 영역을 만들고, 몇 개의 선을 표현하고, 레이블로 꾸미는 등의 일을 할 수 있습니다.
 
-
+------
 
 
 
@@ -57,7 +57,7 @@ pyplot 모듈의 각각의 함수를 사용해서 그래프를 만들고 변화�
 
 
 
-# Matplotlib x, y 값 입력하기
+# 01. Matplotlib x, y 값 입력하기
 
 
 
@@ -147,7 +147,7 @@ plt.show()
 
 
 
-# Matplotlib 마커 지정하기
+# 02. Matplotlib 마커 지정하기
 
 ![img](https://wikidocs.net/images/page/92083/set_marker_00.png)
 
@@ -1322,10 +1322,6 @@ weight는 몸무게 값을 나타내는 리스트입니다.
 
 
 
-
-
-
-
 ## 여러 개의 히스토그램 그리기
 
 
@@ -1366,3 +1362,1292 @@ histtype을 ‘step’으로 설정하면 막대 내부가 비어있고, ‘step
 
 
 ![img](https://wikidocs.net/images/page/92112/histogram_02.png)
+
+
+
+
+
+# Matplotlib 여러 개의 그래프 그리기
+
+**matplotlib.pyplot** 모듈의 **subplot()** 함수를 이용해서 여러 개의 그래프를 하나의 그림으로 나타내는 방법에 대해 소개합니다.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x1 = np.linspace(0.0, 5.0)
+x2 = np.linspace(0.0, 2.0)
+
+y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
+y2 = np.cos(2 * np.pi * x2)
+
+plt.subplot(2, 1, 1)                # nrows=2, ncols=1, index=1
+plt.plot(x1, y1, 'o-')
+plt.title('1st Graph')
+plt.ylabel('Damped oscillation')
+
+plt.subplot(2, 1, 2)                # nrows=2, ncols=1, index=2
+plt.plot(x2, y2, '.-')
+plt.title('2nd Graph')
+plt.xlabel('time (s)')
+plt.ylabel('Undamped')
+
+plt.tight_layout()
+plt.show()
+```
+
+우선 [NumPy 함수](https://codetorial.net/numpy/functions/index.html)를 사용해서 두 개의 cosine 함수 y1, y2를 만듭니다.
+
+**subplot(nrows, ncols, index)**의 순서대로 nrows=2, ncols=1을 입력하고,
+
+y1 함수는 index=1, y2 함수는 index=2를 입력해서 각각 위, 아래에 위치하도록 합니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 여러 개의 그래프 그리기 - 기본 사용](https://codetorial.net/matplotlib/_images/subplot_ex01_01.png)](https://codetorial.net/matplotlib/_images/subplot_ex01_01.png)
+
+
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x1 = np.linspace(0.0, 5.0)
+x2 = np.linspace(0.0, 2.0)
+
+y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
+y2 = np.cos(2 * np.pi * x2)
+
+plt.subplot(1, 2, 1)                # nrows=1, ncols=2, index=1
+plt.plot(x1, y1, 'o-')
+plt.title('1st Graph')
+plt.xlabel('time (s)')
+plt.ylabel('Damped oscillation')
+
+plt.subplot(1, 2, 2)                # nrows=1, ncols=2, index=2
+plt.plot(x2, y2, '.-')
+plt.title('2nd Graph')
+plt.xlabel('time (s)')
+plt.ylabel('Undamped')
+
+plt.tight_layout()
+plt.show()
+```
+
+두 그래프를 수평 방향으로 배치하기 위해서 **subplot(nrows, ncols, index)**의 순서대로 nrows=1, ncols=2을 입력하고,
+
+y1 함수는 index=1, y2 함수는 index=2를 입력해서 각각 좌우로 위치하도록 합니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 여러 개의 그래프 그리기 - 기본 사용2](https://codetorial.net/matplotlib/_images/subplot_ex01_02.png)](https://codetorial.net/matplotlib/_images/subplot_ex01_02.png)
+
+
+
+
+
+## Matplotlib 컬러맵 설정하기
+
+[
+![Matplotlib 컬러맵 설정하기](https://codetorial.net/matplotlib/_images/set_colormap_00.png)](https://codetorial.net/matplotlib/_images/set_colormap_00.png)
+
+**matplotlib.pyplot** 모듈은 컬러맵을 간편하게 설정하기 위한 여러 함수를 제공합니다.
+
+아래의 함수들을 사용해서 그래프의 컬러맵을 설정하는 방식에 대해 소개합니다.
+
+**autumn()**, **bone()**, **cool()**, **copper()**, **flag()**, **gray()**, **hot()**, **hsv()**, **inferno()**, **jet()**, **magma()**, **nipy_spectral()**,
+
+**pink()**, **plasma()**, **prism()**, **spring()**, **summer()**, **viridis()**, **winter()**.
+
+### 
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(0)
+arr = np.random.standard_normal((8, 100))
+
+plt.subplot(2, 2, 1)
+# plt.scatter(arr[0], arr[1], c=arr[1], cmap='spring')
+plt.scatter(arr[0], arr[1], c=arr[1])
+plt.spring()
+plt.title('spring')
+
+plt.subplot(2, 2, 2)
+plt.scatter(arr[2], arr[3], c=arr[3])
+plt.summer()
+plt.title('summer')
+
+plt.subplot(2, 2, 3)
+plt.scatter(arr[4], arr[5], c=arr[5])
+plt.autumn()
+plt.title('autumn')
+
+plt.subplot(2, 2, 4)
+plt.scatter(arr[6], arr[7], c=arr[7])
+plt.winter()
+plt.title('winter')
+
+plt.tight_layout()
+plt.show()
+```
+
+[subplot()](https://codetorial.net/matplotlib/subplot_ex01.html) 함수를 이용해서 네 영역에 각각의 그래프를 나타내고,
+
+**spring()**, **summer()**, **autumn()**, **winter()** 함수를 이용해서 컬러맵을 다르게 설정했습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 컬러맵 설정하기 - 기본 사용](https://codetorial.net/matplotlib/_images/set_colormap_01.png)](https://codetorial.net/matplotlib/_images/set_colormap_01.png)
+
+Matplotlib 컬러맵 설정하기 - 기본 사용
+
+## 컬러바 나타내기
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(0)
+arr = np.random.standard_normal((8, 100))
+
+plt.subplot(2, 2, 1)
+plt.scatter(arr[0], arr[1], c=arr[1])
+plt.viridis()
+plt.title('viridis')
+plt.colorbar()
+
+plt.subplot(2, 2, 2)
+plt.scatter(arr[2], arr[3], c=arr[3])
+plt.plasma()
+plt.title('plasma')
+plt.colorbar()
+
+plt.subplot(2, 2, 3)
+plt.scatter(arr[4], arr[5], c=arr[5])
+plt.jet()
+plt.title('jet')
+plt.colorbar()
+
+plt.subplot(2, 2, 4)
+plt.scatter(arr[6], arr[7], c=arr[7])
+plt.nipy_spectral()
+plt.title('nipy_spectral')
+plt.colorbar()
+
+plt.tight_layout()
+plt.show()
+```
+
+**colorbar()** 함수를 사용하면 그래프 영역에 컬러바를 포함할 수 있습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 컬러맵 설정하기 - 컬러바 나타내기](https://codetorial.net/matplotlib/_images/set_colormap_02.png)](https://codetorial.net/matplotlib/_images/set_colormap_02.png)
+
+Matplotlib 컬러맵 설정하기 - 컬러바 나타내기
+
+## 컬러맵 종류
+
+pyplot 모듈의 **colormaps()** 함수를 사용해서 Matplotlib에서 사용할 수 있는 모든 컬러맵의 이름을 얻을 수 있습니다.
+
+```
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+cmaps = plt.colormaps()
+for cm in cmaps:
+    print(cm)
+```
+
+아래 그림은 각 컬러맵의 예시를 나타냅니다.
+
+[![_images/set_colormap_00_1.png](https://codetorial.net/matplotlib/_images/set_colormap_00_1.png)](https://codetorial.net/matplotlib/_images/set_colormap_00_1.png)
+
+# Matplotlib 텍스트 삽입하기
+
+[![Matplotlib 텍스트 삽입하기](https://codetorial.net/matplotlib/_images/addtext00.png)](https://codetorial.net/matplotlib/_images/addtext00.png)
+
+
+
+**matplotlib.pyplot** 모듈의 **text()** 함수는 그래프의 적절한 위치에 텍스트를 삽입하도록 합니다.
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+a = 2.0 * np.random.randn(10000) + 1.0
+b = np.random.standard_normal(10000)
+c = 20.0 * np.random.rand(5000) - 10.0
+
+font1 = {'family': 'serif',
+      'color':  'darkred',
+      'weight': 'normal',
+      'size': 16}
+
+font2 = {'family': 'Times New Roman',
+      'color':  'blue',
+      'weight': 'bold',
+      'size': 12,
+      'alpha': 0.7}
+
+font3 = {'family': 'Arial',
+      'color':  'forestgreen',
+      'style': 'italic',
+      'size': 14}
+
+plt.hist(a, bins=100, density=True, alpha=0.7, histtype='step')
+plt.text(1.0, 0.35, 'np.random.randn()', fontdict=font1)
+plt.hist(b, bins=50, density=True, alpha=0.5, histtype='stepfilled')
+plt.text(2.0, 0.20, 'np.random.standard_normal()', fontdict=font2)
+plt.hist(c, bins=100, density=True, alpha=0.9, histtype='step')
+plt.text(5.0, 0.08, 'np.random.rand()', fontdict=font3)
+
+plt.show()
+```
+
+**text()** 함수를 이용해서 3개의 히스토그램 그래프에 설명을 위한 텍스트를 각각 추가했습니다.
+
+**text()**에 그래프 상의 x 위치, y 위치, 그리고 삽입할 텍스트를 순서대로 입력합니다.
+
+**fontdict** 키워드를 이용하면 font의 종류, 크기, 색상, 투명도, weight 등의 텍스트 스타일을 설정할 수 있습니다.
+
+font1, font2, font3과 같이 미리 지정한 폰트 딕셔너리를 fontdict 키워드에 입력해줍니다.
+
+예제에서는 ‘family’, ‘color’, ‘weight’, ‘size’, ‘alpha’, ‘style’ 등과 같은 텍스트 속성을 사용했습니다.
+
+Matplotlib에서 사용할 수 있는 텍스트 속성들에 대해서는 이 [링크](https://matplotlib.org/3.3.1/tutorials/text/text_props.html)를 참고하세요.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 텍스트 삽입하기 - 텍스트 스타일 설정하기](https://codetorial.net/matplotlib/_images/addtext02.png)](https://codetorial.net/matplotlib/_images/addtext02.png)
+
+
+
+
+
+
+
+# Matplotlib 수학적 표현 사용하기
+
+[![Matplotlib 수학적 표현 나타내기](https://codetorial.net/matplotlib/_images/mathematical_expressions_00.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_00.png)
+
+
+
+달러 기호 ($) 사이에 위치하는 TeX 마크업 표현을 통해 Matplotlib에서 수학적 표현을 사용할 수 있습니다.
+
+그래프의 제목, 축 레이블, 그리고 데이터 곡선을 설명하는 텍스트 상자에도 수학적 표현을 사용할 수 있습니다.
+
+## 그리스 문자 (Greek Letter)
+
+Matplotlib에서 문자열에 수학적 표현을 사용하기 위해서 아래와 같이 세가지 표현이 필요합니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 그리스 문자](https://codetorial.net/matplotlib/_images/mathematical_expressions_01.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_01.png)
+
+- **‘r’은 파이썬 문자열을 raw string으로 표현**하도록 합니다.
+- Matplotlib의 수학적 표현은 **두 개의 달러 기호 ($) 사이에 위치**해야 합니다.
+- **Tex 마크업 언어** ([참고](https://en.wikibooks.org/wiki/LaTeX/Mathematics))를 사용해서 각각의 수학적 표현과 기호를 사용합니다.
+
+```python
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.xlabel('X-Label')
+plt.ylabel('Y-Label')
+plt.text(1, 15, r'$\alpha > \beta$', fontdict={'size': 16})
+
+plt.show()
+```
+
+**text()** 함수를 사용해서 그래프의 x=1, y=15 위치에 그리스 문자를 포함하는 문자열을 삽입했습니다.
+
+아래 그림과 같이 그래프에 αα와 ββ가 표시됩니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 그리스 문자](https://codetorial.net/matplotlib/_images/mathematical_expressions_02.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_02.png)
+
+Matplotlib 수학적 표현 나타내기 - 그리스 문자
+
+그리스 문자를 위한 TeX 기호는 아래의 표를 참고하세요.
+
+**소문자**
+
+| αα \alpha  | ββ \beta  | χχ \chi    | δδ \delta    | ϝϝ \digamma    | ϵϵ \epsilon  |
+| ---------- | --------- | ---------- | ------------ | -------------- | ------------ |
+| ηη \eta    | γγ \gamma | ιι \iota   | κκ \kappa    | λλ \lambda     | μμ \mu       |
+| νν \nu     | ωω \omega | ϕϕ \phi    | ππ \pi       | ψψ \psi        | ρρ \rho      |
+| σσ \sigma  | ττ \tau   | θθ \theta  | υυ \upsilon  | εε \varepsilon | ϰϰ \varkappa |
+| φφ \varphi | ϖϖ \varpi | ϱϱ \varrho | ςς \varsigma | ϑϑ \vartheta   | ξξ \xi       |
+| ζζ \zeta   |           |            |              |                |              |
+
+**대문자**
+
+| ΔΔ \Delta | ΓΓ \Gamma | ΛΛ \Lambda | ΩΩ \Omega   | ΦΦ \Phi | ΠΠ \Pi  |
+| --------- | --------- | ---------- | ----------- | ------- | ------- |
+| ΨΨ \Psi   | ΣΣ \Sigma | ΘΘ \Theta  | ΥΥ \Upsilon | ΞΞ \Xi  | ℧℧ \mho |
+| ∇∇ \nabla |           |            |             |         |         |
+
+## 위 첨자 (Superscripts), 아래 첨자 (Subscripts)
+
+위 첨자와 아래 첨자를 위해서는 아래와 같이 각각 ‘^’와 ‘_’ 기호를 사용합니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 위 첨자 (Superscripts), 아래 첨자 (Subscripts)](https://codetorial.net/matplotlib/_images/mathematical_expressions_03.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_03.png)
+
+### 예제
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.xlabel('X-Label')
+plt.ylabel('Y-Label')
+plt.text(1, 15, r'$\alpha^2 > \beta_5$', fontdict={'size': 16})
+
+plt.show()
+```
+
+‘^’와 ‘_’를 사용해서 그래프에 위 첨자와 아래 첨자를 포함하는 수식 표현을 삽입했습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 위 첨자 (Superscripts), 아래 첨자 (Subscripts)](https://codetorial.net/matplotlib/_images/mathematical_expressions_04.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_04.png)
+
+Matplotlib 수학적 표현 나타내기 - 위 첨자 (Superscripts), 아래 첨자 (Subscripts)
+
+## 분수 (Fractions)
+
+분수 표현을 사용하기 위해서는 아래와 같이 \frac{ }{ } 표현을 사용합니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 분수 (Fractions)](https://codetorial.net/matplotlib/_images/mathematical_expressions_05.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_05.png)
+
+
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.xlabel('X-Label')
+plt.ylabel('Y-Label')
+plt.text(1, 15, r'$\frac{1}{2} + \frac{3}{4} = \frac{5}{4}$', fontdict={'size': 16})
+
+plt.show()
+```
+
+아래와 같이 그래프에 분수 표현 수식이 삽입되었습니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 분수 (Fractions)](https://codetorial.net/matplotlib/_images/mathematical_expressions_06.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_06.png)
+
+## 표준 함수 (Standard Functions)와 대형 기호 (Big Symbols)
+
+아래 그림과 같이 Matplotlib에서 삼각함수 (sin, cos, tan 등), 극한 (lim), 최대 (max), 최소 (min) 등의 표현과
+
+다양한 대형 연산자 기호를 사용할 수 있습니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 표준 함수 (Standard Functions)와 대형 기호 (Big Symbols)](https://codetorial.net/matplotlib/_images/mathematical_expressions_11.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_11.png)
+
+```
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [1, 4, 9, 16])
+plt.xlabel('X-Label')
+plt.ylabel('Y-Label')
+plt.text(1, 15, r'$\sin (x) \ \cos (x) \ \tan (x)$', fontdict={'size': 16})
+plt.text(1, 12, r'$\lim_{x\rightarrow 2} (x^2 - x + 2)$', fontdict={'size': 16})
+plt.text(1, 8, r'$\sum_{n=0}^{10}{(n^2 + n)}$', fontdict={'size': 16})
+plt.show()
+```
+
+그래프에 여러가지 삼각함수와 극한 기호, 그리고 합 기호 (Summation symbol)를 표시했습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 수학적 표현 나타내기 - 표준 함수 (Standard Functions)와 대형 기호 (Big Symbols)](https://codetorial.net/matplotlib/_images/mathematical_expressions_12.png)](https://codetorial.net/matplotlib/_images/mathematical_expressions_12.png)
+
+Matplotlib 수학적 표현 나타내기 - 표준 함수 (Standard Functions)와 대형 기호 (Big Symbols)
+
+더 다양한 표준 함수의 기호는 아래의 표를 참고하세요.
+
+| Command | Result         | Command | Result         | Command | Result       | Command | Result       |
+| :------ | :------------- | :------ | :------------- | :------ | :----------- | :------ | :----------- |
+| \Pr     | PrPr           | \arccos | arccosarccos   | \arcsin | arcsinarcsin | \arctan | arctanarctan |
+| \arg    | argarg         | \cos    | coscos         | \cosh   | coshcosh     | \cot    | cotcot       |
+| \coth   | cothcoth       | \csc    | csccsc         | \deg    | degdeg       | \det    | detdet       |
+| \dim    | dimdim         | \exp    | expexp         | \gcd    | gcdgcd       | \hom    | homhom       |
+| \inf    | infinf         | \ker    | kerker         | \lg     | lglg         | \lim    | limlim       |
+| \liminf | lim inflim inf | \limsup | lim suplim sup | \ln     | lnln         | \log    | loglog       |
+| \max    | maxmax         | \min    | minmin         | \sec    | secsec       | \sin    | sinsin       |
+| \sinh   | sinhsinh       | \sup    | supsup         | \tan    | tantan       | \tanh   | tanhtanh     |
+
+대형 기호는 아래의 표를 참고하세요.
+
+| Command    | Result | Command   | Result | Command  | Result | Command   | Result |
+| :--------- | :----- | :-------- | :----- | :------- | :----- | :-------- | :----- |
+| \bigcap    | ⋂⋂     | \bigcup   | ⋃⋃     | \bigodot | ⨀⨀     | \bigoplus | ⨁⨁     |
+| \bigotimes | ⨂⨂     | \biguplus | ⨄⨄     | \bigvee  | ⋁⋁     | \bigwedge | ⋀⋀     |
+| \coprod    | ∐∐     | \int      | ∫∫     | \oint    | ∮∮     | \prod     | ∏∏     |
+| \sum       | ∑∑     |           |        |          |        |           |        |
+
+그리고 더 다양한 수학적 표현의 사용과 그 설명에 대해서는 공식 문서의 설명 ([링크](https://matplotlib.org/3.1.1/tutorials/text/mathtext.html))을 참고하세요.
+
+
+
+
+
+# Matplotlib 이미지 저장하기
+
+[![Matplotlib 이미지 저장하기](https://codetorial.net/matplotlib/_images/savefig_00.png)](https://codetorial.net/matplotlib/_images/savefig_00.png)
+
+
+
+**matplotlib.pyplot** 모듈의 **savefig()** 함수를 사용해서 그래프를 이미지 파일 등으로 저장하는 방법을 소개합니다.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+x1 = np.linspace(0.0, 5.0)
+x2 = np.linspace(0.0, 2.0)
+
+y1 = np.cos(2 * np.pi * x1) * np.exp(-x1)
+y2 = np.cos(2 * np.pi * x2)
+
+plt.subplot(2, 1, 1)                # nrows=2, ncols=1, index=1
+plt.plot(x1, y1, 'o-')
+plt.title('1st Graph')
+plt.ylabel('Damped oscillation')
+
+plt.subplot(2, 1, 2)                # nrows=2, ncols=1, index=2
+plt.plot(x2, y2, '.-')
+plt.title('2nd Graph')
+plt.xlabel('time (s)')
+plt.ylabel('Undamped')
+
+plt.tight_layout()
+# plt.show()
+plt.savefig('savefig_default.png')
+```
+
+**savefig()** 함수에 파일 이름을 입력해주면 아래와 같은 이미지 파일이 저장됩니다.
+
+[![Matplotlib 이미지 저장하기 - 기본 사용](https://codetorial.net/matplotlib/_images/savefig_default.png)](https://codetorial.net/matplotlib/_images/savefig_default.png)
+
+Matplotlib 이미지 저장하기 - 기본 사용
+
+## dpi 설정하기
+
+```
+plt.savefig('savefig_default.png')
+plt.savefig('savefig_50dpi.png', dpi=50)
+plt.savefig('savefig_200dpi.png', dpi=200)
+```
+
+**dpi (Dots per Inch)**는 이미지의 해상도를 설정합니다. 디폴트는 dpi=100입니다.
+
+해상도에 따라 아래와 같은 이미지가 저장됩니다.
+
+[![Matplotlib 이미지 저장하기 - dpi 설정하기](https://codetorial.net/matplotlib/_images/savefig_dpi.png)](https://codetorial.net/matplotlib/_images/savefig_dpi.png)
+
+Matplotlib 이미지 저장하기 - dpi 설정하기
+
+## facecolor 설정하기
+
+```
+plt.savefig('savefig_facecolor.png', facecolor='#eeeeee')
+```
+
+**facecolor**는 이미지의 배경색을 설정합니다.
+
+아래와 같은 이미지가 저장됩니다.
+
+[![Matplotlib 이미지 저장하기 - facecolor 설정하기](https://codetorial.net/matplotlib/_images/savefig_facecolor.png)](https://codetorial.net/matplotlib/_images/savefig_facecolor.png)
+
+
+
+## bbox_inches 설정하기
+
+```
+plt.savefig('savefig_bbox_inches.png', facecolor='#eeeeee')
+plt.savefig('savefig_bbox_inches2.png', facecolor='#eeeeee', bbox_inches='tight')
+```
+
+**bbox_inches**는 그래프로 저장할 영역을 설정합니다.
+
+디폴트로 **None**이지만, ‘tight’로 지정하면 여백을 최소화하고 그래프 영역만 이미지로 저장합니다.
+
+[![Matplotlib 이미지 저장하기 - bbox_inches 설정하기 (디폴트)](https://codetorial.net/matplotlib/_images/savefig_bbox_inches.png)](https://codetorial.net/matplotlib/_images/savefig_bbox_inches.png)
+
+Matplotlib 이미지 저장하기 - bbox_inches 설정하기 (디폴트)
+
+[![Matplotlib 이미지 저장하기 - bbox_inches 설정하기 (tight)](https://codetorial.net/matplotlib/_images/savefig_bbox_inches2.png)](https://codetorial.net/matplotlib/_images/savefig_bbox_inches2.png)
+
+Matplotlib 이미지 저장하기 - bbox_inches 설정하기 (tight)
+
+
+
+## pad_inches 설정하기
+
+```
+plt.savefig('savefig_pad_inches.png', facecolor='#eeeeee',
+            bbox_inches='tight', pad_inches=0.3)
+plt.savefig('savefig_pad_inches2.png', facecolor='#eeeeee',
+            bbox_inches='tight', pad_inches=0.5)
+```
+
+**bbox_inches=’tight’**로 지정하면 **pad_inches**를 함께 사용해서 **여백 (Padding)**을 지정할 수 있습니다.
+
+**pad_inches**의 디폴트 값은 0.1이며, 0.3과 0.5로 지정했을 때의 결과는 아래와 같습니다.
+
+[![Matplotlib 이미지 저장하기 - pad_inches 설정하기 (0.3)](https://codetorial.net/matplotlib/_images/savefig_pad_inches.png)](https://codetorial.net/matplotlib/_images/savefig_pad_inches.png)
+
+Matplotlib 이미지 저장하기 - pad_inches 설정하기 (0.3)
+
+[![Matplotlib 이미지 저장하기 - pad_inches 설정하기 (0.5)](https://codetorial.net/matplotlib/_images/savefig_pad_inches2.png)](https://codetorial.net/matplotlib/_images/savefig_pad_inches2.png)
+
+
+
+
+
+
+
+# Matplotlib 객체 지향 인터페이스
+
+지금까지 **matplotlib.pyplot** 모듈의 다양한 함수들을 이용해서 간편하게 그래프를 그렸습니다.
+
+Matplotlib는 그래프를 다루는 두 가지의 인터페이스를 제공하는데 첫번째는 **MATLAB 스타일로 pyplot** 모듈을 사용하는 방식이고, 두번째는 **객체 지향 인터페이스**입니다.
+
+Matplotlib 공식 문서에 의하면 더욱 커스터마이즈된 그래프를 표현하기 위해 객체 지향 인터페이스를 사용하기를 권장합니다.
+
+
+
+## plt.subplots() 사용하기
+
+pyplot 모듈은 **subplots()**라는 유용한 함수를 제공합니다. ([matplotlib.pyplot.subplots](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots))
+
+보통 아래와 같은 방식으로 사용합니다.
+
+### 
+
+```python
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+plt.show()
+```
+
+
+
+**subplots()** 함수를 호출하면 figure (fig)과 subplot (ax) 객체를 생성해서 튜플의 형태로 반환합니다.
+
+아래와 같은 그림이 나타납니다.
+
+[![Matplotlib 객체 지향 인터페이스 1 - plt.subplots() 사용하기](https://codetorial.net/matplotlib/_images/oo_interface_01.png)](https://codetorial.net/matplotlib/_images/oo_interface_01.png)
+
+Matplotlib 객체 지향 인터페이스 1 - plt.subplots() 사용하기
+
+위의 예제에서, **fig, ax = plt.subplots()**과 같이 사용하지 않고 아래와 같이 사용할 수도 있습니다.
+
+### 
+
+```
+import matplotlib.pyplot as plt
+
+# fig, ax = plt.subplots()
+fig = plt.figure()
+ax = fig.add_axes([0, 0, 1, 1])
+
+plt.show()
+```
+
+plt.figure()는 **Figure 클래스의 인스턴스**를 반환합니다.
+
+Figure 클래스의 인스턴스 fig의 메서드 **add_axes()**는 fig에 axes를 하나 추가합니다.
+
+add_axes([left, bottom, width, height])의 형태로 0에서 1 사이의 값을 입력합니다.
+
+이 페이지의 예제들에서는 plt.subplots()을 사용합니다.
+
+
+
+## 행과 열 설정하기 (nrows, ncols)
+
+```
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(2, 2)
+plt.show()
+```
+
+**plt.subplots(nrows, ncols)**의 형태로 행과 열의 개수를 지정할 수 있습니다.
+
+만약 지정하지 않으면 기본적으로 행과 열의 개수는 모두 1입니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 객체 지향 인터페이스 1 - 행과 열 설정하기 (nrows, ncols)](https://codetorial.net/matplotlib/_images/oo_interface_02.png)](https://codetorial.net/matplotlib/_images/oo_interface_02.png)
+
+Matplotlib 객체 지향 인터페이스 1 - 행과 열 설정하기 (nrows, ncols)
+
+
+
+## X, Y축 공유하기 (sharex, sharey)
+
+앞의 그림에서 네 개의 그래프 영역은 X, Y축의 범위가 같습니다.
+
+이 경우에 중복해서 표시하지 않도록 X축 또는 Y축을 공유하도록 설정할 수 있습니다.
+
+```
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True)
+plt.show()
+```
+
+sharex=True, sharey=True로 설정함으로써 아래와 같이 중복된 축을 한번만 표시하도록 했습니다.
+
+sharex, sharey에 True, False 이 외에도 ‘all’, ‘none’, ‘row’, ‘col’ 등을 지정할 수 있습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 객체 지향 인터페이스 1 - X, Y축 공유하기 (sharex, sharey)](https://codetorial.net/matplotlib/_images/oo_interface_03.png)](https://codetorial.net/matplotlib/_images/oo_interface_03.png)
+
+Matplotlib 객체 지향 인터페이스 1 - X, Y축 공유하기 (sharex, sharey)
+
+
+
+## 그래프 그리기
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.arange(1, 5)     # [1, 2, 3, 4]
+
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True, squeeze=True)
+ax[0][0].plot(x, np.sqrt(x))      # left-top
+ax[0][1].plot(x, x)               # right-top
+ax[1][0].plot(x, -x+5)            # left-bottom
+ax[1][1].plot(x, np.sqrt(-x+5))   # right-bottom
+
+plt.show()
+```
+
+NumPy를 이용해서 x값들을 만들고, 네 개의 그래프 영역에 각각 다른 y값을 그래프로 나타냈습니다.
+
+plt.subplots()이 반환하는 ax는 **Matplotlib의 Axes 클래스의 인스턴스**입니다.
+
+행과 열을 각각 2, 2로 지정했기 때문에 ax는 2×2의 형태를 갖는 NumPy 어레이가 됩니다.
+
+위치에 따라 각각 ax[0][0], ax[0][1], ax[1][0], ax[1][1]과 같이 접근해서 사용할 수 있습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 객체 지향 인터페이스 2 - 그래프 그리기](https://codetorial.net/matplotlib/_images/oo_interface_04.png)](https://codetorial.net/matplotlib/_images/oo_interface_04.png)
+
+Matplotlib 객체 지향 인터페이스 2 - 그래프 그리기
+
+
+
+## 스타일 설정하기
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.arange(1, 5)     # [1, 2, 3, 4]
+
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True, squeeze=True)
+ax[0][0].plot(x, np.sqrt(x), 'gray', linewidth=3)
+ax[0][1].plot(x, x, 'g^-', markersize=10)
+ax[1][0].plot(x, -x+5, 'ro--')
+ax[1][1].plot(x, np.sqrt(-x+5), 'b.-.')
+
+plt.show()
+```
+
+
+
+plot()에 각각의 그래프의 스타일을 커스터마이즈하도록 설정할 수 있습니다.
+
+(자세한 내용은 [마커 지정하기](https://codetorial.net/matplotlib/set_marker.html), [색깔 지정하기](https://codetorial.net/matplotlib/set_color.html), [색깔 지정하기2](https://codetorial.net/set_color2.html) 페이지를 참고하세요.)
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 객체 지향 인터페이스 2 - 스타일 설정하기](https://codetorial.net/matplotlib/_images/oo_interface_05.png)](https://codetorial.net/matplotlib/_images/oo_interface_05.png)
+
+Matplotlib 객체 지향 인터페이스 2 - 스타일 설정하기
+
+## 제목과 범례 표시하기
+
+**set_title()**과 **legend()**를 이용해서 각각의 그래프에 제목과 범례를 설정할 수 있습니다.
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.arange(1, 5)     # [1, 2, 3, 4]
+
+fig, ax = plt.subplots(2, 2, sharex=True, sharey=True, squeeze=True)
+ax[0][0].plot(x, np.sqrt(x), 'gray', linewidth=3, label='y=np.sqrt(x)')
+ax[0][0].set_title('Graph 1')
+ax[0][0].legend()
+ax[0][1].plot(x, x, 'g^-', markersize=10, label='y=x')
+ax[0][1].set_title('Graph 2')
+ax[0][1].legend(loc='upper left')
+ax[1][0].plot(x, -x+5, 'ro--', label='y=-x+5')
+ax[1][0].set_title('Graph 3')
+ax[1][0].legend(loc='lower left')
+ax[1][1].plot(x, np.sqrt(-x+5), 'b.-.', label='y=np.sqrt(-x+5)')
+ax[1][1].set_title('Graph 4')
+ax[1][1].legend(loc='upper center')
+
+plt.show()
+```
+
+**set_title()**은 입력한 문자열을 그래프의 제목으로 나타냅니다.
+
+**legend()**는 **plot()**에서 label을 이용해서 지정한 문자열을 범례에 나타냅니다.
+
+그래프 영역에서 범례가 표시될 위치를 지정할 수 있는데, 지정하지 않으면 최적의 위치에 범례를 표시합니다.
+
+범례가 표시될 위치를 설정하기 위한 옵션은 아래와 같습니다.
+
+```
+'best'
+'upper right'
+'upper left'
+'lower left'
+'lower right'
+'right'
+'center left'
+'center right'
+'lower center'
+'upper center'
+'center'
+```
+
+
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 객체 지향 인터페이스 2 - 제목과 범례 표시하기](https://codetorial.net/matplotlib/_images/oo_interface_06.png)](https://codetorial.net/matplotlib/_images/oo_interface_06.png)
+
+Matplotlib 객체 지향 인터페이스 2 - 제목과 범례 표시하기
+
+
+
+
+
+# Matplotlib 두 종류의 그래프 그리기
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. 기본 스타일 설정
+plt.style.use('default')
+plt.rcParams['figure.figsize'] = (4, 3)
+plt.rcParams['font.size'] = 12
+
+# 2. 데이터 준비
+x = np.arange(2020, 2027)
+y1 = np.array([1, 3, 7, 5, 9, 7, 14])
+y2 = np.array([1, 3, 5, 7, 9, 11, 13])
+
+# 3. 그래프 그리기
+fig, ax1 = plt.subplots()
+
+ax1.plot(x, y1, '-s', color='green', markersize=7, linewidth=5, alpha=0.7, label='Price')
+ax1.set_ylim(0, 18)
+ax1.set_xlabel('Year')
+ax1.set_ylabel('Price ($)')
+ax1.tick_params(axis='both', direction='in')
+
+ax2 = ax1.twinx()
+ax2.bar(x, y2, color='deeppink', label='Demand', alpha=0.7, width=0.7)
+ax2.set_ylim(0, 18)
+ax2.set_ylabel(r'Demand ($\times10^6$)')
+ax2.tick_params(axis='y', direction='in')
+
+plt.show()
+```
+
+
+
+우선 **ax1.twinx()**로 X축을 공유하는 이중 Y축을 만들고,
+
+**ax1.plot()**과 **ax2.bar()**를 사용해서 y1, y2 데이터를 각각 꺾은선 그래프와 막대 그래프의 형태로 나타냈습니다.
+
+(두번째 Y축의 레이블에 표현한 수학적 표현의 사용에 대해서는 [링크](https://codetorial.net/matplotlib/mathematical_expressions.html)를 참고하세요.)
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 두 종류의 그래프 그리기 - 기본 사용](https://codetorial.net/matplotlib/_images/two_types_of_graphs_01.png)](https://codetorial.net/matplotlib/_images/two_types_of_graphs_01.png)
+
+
+
+## 그래프 순서 지정하기
+
+위의 그림을 보면 녹색의 꺾은선 그래프가 막대의 뒤에 그려져 있어서 잘 보이지 않습니다.
+
+아래 예제에서는 **set_zorder()** 메서드를 사용해서 그래프가 표시될 순서를 지정해 보겠습니다.
+
+### 
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 1. 기본 스타일 설정
+plt.style.use('default')
+plt.rcParams['figure.figsize'] = (4, 3)
+plt.rcParams['font.size'] = 12
+
+# 2. 데이터 준비
+x = np.arange(2020, 2027)
+y1 = np.array([1, 3, 7, 5, 9, 7, 14])
+y2 = np.array([1, 3, 5, 7, 9, 11, 13])
+
+# 3. 그래프 그리기
+fig, ax1 = plt.subplots()
+
+ax1.plot(x, y1, '-s', color='green', markersize=7, linewidth=5, alpha=0.7, label='Price')
+ax1.set_ylim(0, 18)
+ax1.set_xlabel('Year')
+ax1.set_ylabel('Price ($)')
+ax1.tick_params(axis='both', direction='in')
+
+ax2 = ax1.twinx()
+ax2.bar(x, y2, color='deeppink', label='Demand', alpha=0.7, width=0.7)
+ax2.set_ylim(0, 18)
+ax2.set_ylabel(r'Demand ($\times10^6$)')
+ax2.tick_params(axis='y', direction='in')
+
+ax1.set_zorder(ax2.get_zorder() + 10)
+ax1.patch.set_visible(False)
+
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+
+plt.show()
+```
+
+**set_zorder()** 메서드는 z-축 방향의 순서를 지정합니다.
+
+아래 그림과 같이 **zorder**가 낮을수록 먼저 그려지고, **zorder**가 높을수록 나중에 그려집니다.
+
+[![Matplotlib 두 종류의 그래프 그리기 - 그래프 순서 지정하기](https://codetorial.net/matplotlib/_images/two_types_of_graphs_02.png)](https://codetorial.net/matplotlib/_images/two_types_of_graphs_02.png)
+
+우선 **ax2.get_zorder()** 메서드를 사용해서 **ax2**의 **zorder**를 얻고,
+
+**ax2**의 **zorder**보다 큰 값을 **ax1**의 **zorder**로 지정함으로써 그래프가 항상 나중에 그려지도록 설정했습니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 두 종류의 그래프 그리기 - 그래프 순서 지정하기](https://codetorial.net/matplotlib/_images/two_types_of_graphs_03.png)](https://codetorial.net/matplotlib/_images/two_types_of_graphs_03.png)
+
+Matplotlib 두 종류의 그래프 그리기 - 그래프 순서 지정하기
+
+
+
+
+
+
+
+# Matplotlib 애니메이션 사용하기
+
+[![Matplotlib 애니메이션 사용하기](https://codetorial.net/matplotlib/_images/animation_funcanimation_00.gif)](https://codetorial.net/matplotlib/_images/animation_funcanimation_00.gif)
+
+
+
+다양한 Matplotlib 그래프를 애니메이션으로 나타내고, 파일로 저장할 수 있습니다.
+
+**matplotlib.animation** 모듈의 **FuncAnimation** 클래스를 사용해서 그래프를 애니메이션으로 표현하는 방법에 대해 소개합니다.
+
+### 
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig, ax = plt.subplots()
+ax.set_xlim(0, 2*np.pi)
+ax.set_ylim(-1.2, 1.2)
+
+x, y = [], []
+line, = plt.plot([], [], 'bo')
+
+
+def update(frame):
+    x.append(frame)
+    y.append(np.sin(frame))
+    line.set_data(x, y)
+    return line,
+
+
+ani = FuncAnimation(fig, update, frames=np.linspace(0, 2*np.pi, 128))
+plt.show()
+```
+
+
+
+**matplotlib.animation** 모듈의 **FuncAnimation** 클래스는 지정한 함수를 반복적으로 호출함으로써 애니메이션을 생성합니다.
+
+**FuncAnimation** 클래스의 첫번째 인자로 **Figure** 객체를, 두번째 인자로는 프레임마다 반복해서 호출할 함수를 지정합니다.
+
+**frames** 키워드 인자에는 반복 가능한 객체를 입력합니다.
+
+[np.linspace(a, b, n)](https://codetorial.net/numpy/functions/numpy_linspace.html)는 a부터 b 사이를 균일한 간격으로 나누는 숫자 n개를 반환합니다.
+
+**update()** 함수에 **frames**에 제공한 값들이 순서대로 제공되어서 프레임을 구성합니다.
+
+아래와 같은 애니메이션이 나타납니다.
+
+[![Matplotlib 애니메이션 사용하기 - 기본 사용](https://codetorial.net/matplotlib/_images/animation_funcanimation_01.gif)](https://codetorial.net/matplotlib/_images/animation_funcanimation_01.gif)
+
+Matplotlib 애니메이션 사용하기 - 기본 사용
+
+
+
+## 프레임 간격 설정하기
+
+### 
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 4), ylim=(-2, 2))
+line, = ax.plot([], [], lw=3)
+
+
+def animate(i):
+  x = np.linspace(0, 4, 1000)
+  y = np.sin(2 * np.pi * (x - 0.01 * i))
+  line.set_data(x, y)
+  return line,
+
+
+# anim = FuncAnimation(fig, animate, frames=200, interval=50)
+anim = FuncAnimation(fig, animate, frames=200, interval=100)
+
+plt.show()
+```
+
+**FuncAnimation** 클래스의 **interval**을 사용해서 프레임 사이의 간격을 밀리초 (milliseconds) 단위로 지정할 수 있습니다.
+
+디폴트 값은 200이며, 예제에서는 interval 값을 각각 50, 100으로 지정했습니다.
+
+아래와 같은 애니메이션 그래프가 나타납니다.
+
+[![Matplotlib 애니메이션 사용하기 - Interval 설정하기 (interval=50ms)](https://codetorial.net/matplotlib/_images/animation_funcanimation_02_interval_50ms.gif)](https://codetorial.net/matplotlib/_images/animation_funcanimation_02_interval_50ms.gif)
+
+Matplotlib 애니메이션 사용하기 - Interval 설정하기 (interval=50ms)
+
+[![Matplotlib 애니메이션 사용하기 - Interval 설정하기 (interval=100ms)](https://codetorial.net/matplotlib/_images/animation_funcanimation_02_interval_100ms.gif)](https://codetorial.net/matplotlib/_images/animation_funcanimation_02_interval_100ms.gif)
+
+Matplotlib 애니메이션 사용하기 - Interval 설정하기 (interval=100ms)
+
+## 애니메이션 저장하기
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 4), ylim=(-2, 2))
+line, = ax.plot([], [], lw=3)
+
+
+def animate(i):
+    x = np.linspace(0, 4, 1000)
+    y = np.sin(2 * np.pi * (x - 0.01 * i))
+    line.set_data(x, y)
+    return line,
+
+
+# anim = FuncAnimation(fig, animate, frames=200, interval=50)
+anim = FuncAnimation(fig, animate, frames=200, interval=100)
+
+# plt.show()
+# anim.save('sine_wave_interval_50ms.gif', writer='imagemagick')
+anim.save('sine_wave_interval_100ms.gif', writer='imagemagick')
+```
+
+
+
+**matplotlib.animation** 모듈의 FuncAnimation 클래스의 **save()** 메서드는 모든 프레임을 애니메이션으로 저장합니다.
+
+Matplotlib 애니메이션을 저장하기 위해서 [ImageMagick](https://imagemagick.org/script/download.php)을 사용합니다.
+
+**Windows** 환경에서는 아래 그림의 파일을 다운받아서 실행하면 설치가 진행됩니다.
+
+[![Matplotlib 애니메이션 사용하기 - ImageMagick 설치하기](https://codetorial.net/matplotlib/_images/animation_funcanimation_03.png)](https://codetorial.net/matplotlib/_images/animation_funcanimation_03.png)
+
+Matplotlib 애니메이션 사용하기 - ImageMagick 설치하기
+
+**Ubuntu** 환경 (Google Colaboratory)에서는 아래의 명령어로 ImageMagick을 설치할 수 있습니다.
+
+```
+!apt install imagemagick
+```
+
+
+
+**save()** 메서드에 **writer=’imagemagick’**과 같이 지정해주고, save() 메서드를 호출하면 지정한 파일명의 **.gif** 파일이 지정한 경로에 저장됩니다.
+
+[![Matplotlib 애니메이션 사용하기 - 애니메이션 저장하기](https://codetorial.net/matplotlib/_images/animation_funcanimation_04.png)](https://codetorial.net/matplotlib/_images/animation_funcanimation_04.png)
+
+
+
+
+
+## **ArtistAnimation** 
+
+이번에는 **matplotlib.animation** 모듈의 **ArtistAnimation** 클래스를 사용해서 그래프를 애니메이션으로 표현하는 방법에 대해 소개합니다.
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+fig, ax = plt.subplots()
+
+x = np.linspace(0, 2 * np.pi, 100)
+y = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
+
+ims = []
+for i in range(100):
+    x += np.pi / 20
+    y += np.pi / 20
+    im = ax.imshow(np.sin(x) + np.cos(y), animated=True)
+    if i == 0:
+        ax.imshow(np.sin(x) + np.cos(y))
+    ims.append([im])
+
+ani = animation.ArtistAnimation(fig, ims, interval=100)
+
+plt.show()
+```
+
+[np.linspace(a, b, n)](https://codetorial.net/numpy/functions/numpy_linspace.html)는 a부터 b 사이를 균일한 간격으로 나누는 숫자 n개를 반환합니다.
+
+**np.pi**는 ππ를 나타내는 [NumPy 상수](https://codetorial.net/numpy/numpy_constants.html)입니다.
+
+**imshow()**는 숫자 데이터 어레이를 이미지로 표현하는 함수입니다.
+
+각기 다른 데이터를 **imshow()** 함수를 사용해서 이미지로 나타내고, **ims** 리스트에 추가했습니다.
+
+**ArtistAnimation** 클래스는 이미지의 리스트를 각각의 프레임을 갖는 애니메이션으로 변환합니다.
+
+아래와 같은 애니메이션이 나타납니다.
+
+[![Matplotlib 애니메이션 사용하기 - 기본 사용](https://codetorial.net/matplotlib/_images/animation_artistanimation_01.gif)](https://codetorial.net/matplotlib/_images/animation_artistanimation_01.gif)
+
+Matplotlib 애니메이션 사용하기 - 기본 사용
+
+## 애니메이션 저장하기
+
+
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+fig, ax = plt.subplots()
+
+x = np.linspace(0, 2 * np.pi, 100)
+y = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
+
+ims = []
+for i in range(100):
+    x += np.pi / 20
+    y += np.pi / 20
+    im = ax.imshow(np.sin(x) + np.cos(y), animated=True)
+    if i == 0:
+        ax.imshow(np.sin(x) + np.cos(y))
+    ims.append([im])
+
+ani = animation.ArtistAnimation(fig, ims, interval=100)
+
+ani.save('sin_plus_cos.gif', writer='imagemagick')
+# plt.show()
+```
+
+
+
+**matplotlib.animation** 모듈의 ArtistAnimation 클래스의 **save()** 메서드는 모든 프레임을 애니메이션으로 저장합니다.
+
+Matplotlib 애니메이션을 저장하기 위해서 [ImageMagick](https://imagemagick.org/script/download.php)을 사용합니다.
+
+이전 페이지와 마찬가지로 **writer=’imagemagick’**과 같이 지정해주고, **save()** 메서드를 호출하면 지정한 파일명의 **.gif** 파일이 지정한 경로에 저장됩니다.
+
+[![Matplotlib 애니메이션 사용하기 - 애니메이션 저장하기](https://codetorial.net/matplotlib/_images/animation_artistanimation_02.png)](https://codetorial.net/matplotlib/_images/animation_artistanimation_02.png)
+
+
+
+
+
+
+
+# Matplotlib 3차원 Surface 표현하기
+
+[![Matplotlib 3차원 Surface 표현하기](https://codetorial.net/matplotlib/_images/3d_plot_surface_00.png)](https://codetorial.net/matplotlib/_images/3d_plot_surface_00.png)
+
+
+
+이 페이지에서는 **plot_surface()** 함수의 사용법을 소개합니다.
+
+**plot_surface()** 함수를 사용해서 2차원 어레이를 3차원 Surface로 표현할 수 있습니다.
+
+```
+from mpl_toolkits.mplot3d import axes3d
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-10, 10, 11)
+X = np.tile(x, (11, 1))
+Y = np.transpose(X)
+Z = np.random.rand(11, 11)
+
+ax.plot_surface(X, Y, Z)
+ax.set_zlim(-10, 10)
+
+plt.tight_layout()
+plt.show()
+```
+
+3차원 Axes 객체 (Axes3D)를 사용하기 위해 우선 **from mpl_toolkits.mplot3d.axes3d** 모듈을 Import 합니다.
+
+**add_subplot()**의 **projection=’3d’** 키워드를 사용해서 Axes3D 객체를 생성합니다.
+
+Axes3D 객체의 **plot_surface()** 함수는 2차원 어레이 형태 X, Y, Z를 3차원 Surface로 표현합니다.
+
+X, Y는 -10에서 10 범위에서 11개의 값을 갖도록 만들어진 2차원 어레이입니다.
+
+[np.linspace](https://codetorial.net/numpy/functions/numpy_linspace.html), [np.tile](https://codetorial.net/numpy/functions/numpy_tile.html), [np.transpose](https://codetorial.net/numpy/functions/numpy_transpose.html) 함수의 사용에 대해서는 링크를 참고하세요.
+
+Z는 0에서 1사이의 값을 갖는 2차원 난수 어레이입니다.
+
+[np.random.rand](https://codetorial.net/numpy/random.html#random-rand) 함수의 사용에 대해서는 링크를 참고하세요.
+
+**set_zlim()**을 사용해서 Z축의 범위를 -10에서 10으로 지정했습니다.
+
+[![Matplotlib 3차원 Surface 표현하기 - 기본 사용](https://codetorial.net/matplotlib/_images/3d_plot_surface_01.png)](https://codetorial.net/matplotlib/_images/3d_plot_surface_01.png)
+
+
+
+```
+# from mpl_toolkits.mplot3d import axes3d
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+#fig = plt.figure()
+#ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-10, 10, 11)
+X = np.tile(x, (11, 1))
+Y = np.transpose(X)
+Z = np.random.rand(11, 11)
+
+ax.plot_surface(X, Y, Z)
+ax.set_zlim(-10, 10)
+
+plt.tight_layout()
+plt.show()
+```
+
+Matplotlib 3.2.0 버전부터 **from mpl_toolkits.mplot3d import axes3d**를 명시적으로 Import하지 않아도 됩니다. ([참고](https://matplotlib.org/3.3.1/tutorials/toolkits/mplot3d.html))
+
+예제2와 예제1은 같은 결과를 보여줍니다.
+
+## 축 눈금 지정하기
+
+```
+from mpl_toolkits.mplot3d import axes3d
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-10, 10, 11)
+X = np.tile(x, (11, 1))
+Y = np.transpose(X)
+Z = np.random.rand(11, 11)
+Z2 = 1.5 * np.random.rand(11, 11) + 2
+Z3 = np.random.rand(11, 11) - 2
+
+ax.plot_surface(X, Y, Z)
+ax.plot_surface(X, Y, Z2)
+ax.plot_surface(X, Y, Z3)
+ax.set_zlim(-10, 10)
+ax.set_xticks([-10, -5, 0, 5, 10])
+ax.set_yticks([-10, -5, 0, 5, 10])
+ax.set_zticks([-10, -5, 0, 5, 10])
+
+plt.tight_layout()
+plt.show()
+```
+
+이번에는 세 개의 2차원 어레이를 3차원 Surface로 표현했습니다.
+
+**set_xticks()**, **set_yticks()**, **set_zticks()**는 X, Y, Z축의 눈금의 위치를 지정합니다.
+
+결과는 아래와 같습니다.
+
+[![Matplotlib 3차원 Surface 표현하기 - 축 눈금 지정하기](https://codetorial.net/matplotlib/_images/3d_plot_surface_02.png)](https://codetorial.net/matplotlib/_images/3d_plot_surface_02.png)
+
+
+
+## 컬러맵, 컬러바 사용하기
+
+```
+from mpl_toolkits.mplot3d import axes3d
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-10, 10, 11)
+X = np.tile(x, (11, 1))
+Y = np.transpose(X)
+Z = 2 * np.random.rand(11, 11) - 1
+
+surf = ax.plot_surface(X, Y, Z, cmap='viridis')
+ax.set_zlim(-5, 5)
+ax.set_xticks([-10, -5, 0, 5, 10])
+ax.set_yticks([-10, -5, 0, 5, 10])
+ax.set_zticks([-5, 0, 5])
+
+fig.colorbar(surf, shrink=0.6, aspect=8)
+surf.set_clim(-1.0, 1.0)
+plt.tight_layout()
+plt.show()
+```
+
+
+
+**plot_surface()** 함수의 **cmap**은 3차원 Surface의 컬러맵을 지정합니다.
+
+**colorbar()**를 호출하면 그래프에 컬러바를 표시합니다.
+
+**shrink**는 컬러바의 크기, **aspect**는 컬러바의 종횡비를 지정합니다.
+
+아래와 같은 그래프가 만들어집니다.
+
+[![Matplotlib 3차원 Surface 표현하기 - 컬러바 표시하기](https://codetorial.net/matplotlib/_images/3d_plot_surface_03.png)](https://codetorial.net/matplotlib/_images/3d_plot_surface_03.png)
+
